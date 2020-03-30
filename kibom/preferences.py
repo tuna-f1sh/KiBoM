@@ -70,7 +70,7 @@ class BomPref:
 
         self.separatorCSV = None
         self.outputFileName = "%O_bom_%v%V"
-        self.variantFileNameFormat = "_(%V)"
+        self.variantFileNameFormat = "_%V"
 
         # Default fields used to group components
         self.groups = [

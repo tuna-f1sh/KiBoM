@@ -30,7 +30,6 @@ from .preferences import BomPref
 from .version import KIBOM_VERSION
 from . import debug
 
-
 def writeVariant(input_file, output_file, variant, subdirectory, pref):
     if variant is not None:
         pref.pcbConfig = variant.strip().split(',')

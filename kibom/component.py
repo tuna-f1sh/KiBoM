@@ -318,11 +318,11 @@ class Component():
                 exclude = True
                 break
             if opt.startswith("+"):
-                include = include or opt[1:] in [str(cfg) for cfg in self.prefs.pcbConfig]
+                include = str(opt[1:]) in [str(cfg) for cfg in self.prefs.pcbConfig]
 
         return include and not exclude
 
-    # Determine if a component is FIXED or not
+    # Determine if a component is FIXED or not (return is inverted!!?)
     def isFixed(self):
 
         check = self.getField(self.prefs.configField).lower()
@@ -342,20 +342,22 @@ class Component():
 
         opts = check.split(",")
 
-        result = False
+        configs = [str(c.lower()) for c in self.prefs.pcbConfig]
 
         for opt in opts:
-            # Options that start with '-' are explicitly removed from certain configurations
-            if opt.startswith('-') and opt[1:].lower() == self.prefs.pcbConfig.lower():
+            if opt.lower() in DNC:
+                return False
+            # what is this doing?
+            if opt.startswith('-') and str(opt[1:].lower()) in configs:
                 result = False
                 break
             if opt.startswith("+"):
                 result = False
-                if opt[1:].lower() == self.prefs.pcbConfig.lower():
+                if str(opt[1:].lower()) in configs:
                     result = True
 
         # by default, part is not fixed
-        return result
+        return True
 
     # Test if this part should be included, based on any regex expressions provided in the preferences
     def testRegExclude(self):
